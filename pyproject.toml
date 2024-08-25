@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "centauri-dl_Nitro4542"
+version = "0.0.1"
+dependencies = [
+    "customtkinter",
+    "yt-dlp",
+    "requests"
+]
+authors = [
+  { name="Nitro4542", email="100068674+Nitro4542@users.noreply.github.com" },
+]
+description = "A yt-dlp wrapper made using CustomTKInter"
+readme = "README.md"
+requires-python = ">=3.12"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Unlicense",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/Nitro4542/centauri-dl"
+Issues = "https://github.com/Nitro4542/centauri-dl/issues"
