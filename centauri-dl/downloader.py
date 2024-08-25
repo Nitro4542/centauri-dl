@@ -25,7 +25,7 @@ class Downloader:
                 ydl.download([self.url])
 
     def check_url(self):
-        if self.url.startswith("https://youtube.com/watch?v=") or self.url.startswith("https://youtube.com"):
+        if "www.youtube.com/" in self.url or "youtu.be/" in self.url or "youtube.com" in self.url or "m.youtube.com/" in self.url:
             response = requests.get(self.url)
             if response.status_code == 200:
                 return 0
