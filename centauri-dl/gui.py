@@ -5,10 +5,8 @@ import customtkinter
 import downloader as dl
 
 class ChooseAudioOrVideoFrame(customtkinter.CTkFrame):
-    def __init__(self, master, update_options_callback):
+    def __init__(self, master):
         super().__init__(master)
-
-        self.update_options_callback = update_options_callback
 
         self.columnconfigure(0, weight=1)
 
@@ -21,10 +19,10 @@ class ChooseAudioOrVideoFrame(customtkinter.CTkFrame):
         self.title = customtkinter.CTkLabel(self, text="Choose what to download:", justify="center")
         self.title.grid(row=0, column=0, padx=10, pady=10, sticky="ew")
 
-        self.radiobutton_video = customtkinter.CTkRadioButton(self, text="Video", value=0, variable=self.radiobutton_var, command=self.update_options_callback)
+        self.radiobutton_video = customtkinter.CTkRadioButton(self, text="Video", value=0, variable=self.radiobutton_var)
         self.radiobutton_video.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
 
-        self.radiobutton_audio = customtkinter.CTkRadioButton(self, text="Audio", value=1, variable=self.radiobutton_var, command=self.update_options_callback)
+        self.radiobutton_audio = customtkinter.CTkRadioButton(self, text="Audio", value=1, variable=self.radiobutton_var)
         self.radiobutton_audio.grid(row=2, column=0, padx=10, pady=10, sticky="ew")
 
     def make_file_extensions(self):
@@ -32,28 +30,6 @@ class ChooseAudioOrVideoFrame(customtkinter.CTkFrame):
             return ["MPEG-4 (.mp4)", "QuickTime (.mov)", "Matroska (.mkv)", "WEBM (.webm)"]
         else:
             return ["MPEG layer 3 (.mp3)", "Waveform (.wav)", "Free Lossless Audio Codec (.flac)", "Vorbis (.ogg)"]
-
-class DownloadOptionsFrame(customtkinter.CTkFrame):
-    def __init__(self, master, audio_video_frame):
-        super().__init__(master)
-
-        self.columnconfigure(0, weight=1)
-
-        self.rowconfigure(0, weight=0)
-        self.rowconfigure(1, weight=1)
-        self.rowconfigure(2, weight=1)
-
-        self.title = customtkinter.CTkLabel(self, text="Choose your download options:", justify="center")
-        self.title.grid(row=0, column=0, padx=10, pady=10, sticky="new")
-
-        self.output_format_var = tkinter.StringVar(value=ChooseAudioOrVideoFrame.make_file_extensions(audio_video_frame)[0])
-        self.output_format = customtkinter.CTkOptionMenu(self, values=ChooseAudioOrVideoFrame.make_file_extensions(audio_video_frame), variable=self.output_format_var)
-        self.output_format.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
-
-        # self.download_subtitles_variable = tkinter.IntVar(value=0)
-
-        # self.download_subtitles = customtkinter.CTkCheckBox(self, text="Download subtitles", variable=self.download_subtitles_variable, onvalue=1, offvalue=0)
-        # self.download_subtitles.grid(row=2, column=0, padx=10, pady=10, sticky="ew")
 
 
 class OutputOptionsFrame(customtkinter.CTkFrame):
@@ -120,8 +96,7 @@ class App(customtkinter.CTk):
         self.title("centauri")
 
         self.columnconfigure(0, weight=0)
-        self.columnconfigure(1, weight=0)
-        self.columnconfigure(2, weight=1)
+        self.columnconfigure(1, weight=1)
 
         self.rowconfigure(0, weight=0)
         self.rowconfigure(1, weight=1)
@@ -129,20 +104,8 @@ class App(customtkinter.CTk):
         self.url_input = customtkinter.CTkEntry(self, placeholder_text="Enter URL")
         self.url_input.grid(row=0, column=0, columnspan=3, padx=10, pady=10, sticky="new")
 
-        self.choose_audio_or_video_frame = ChooseAudioOrVideoFrame(self, lambda: self.update_download_options_frame())
+        self.choose_audio_or_video_frame = ChooseAudioOrVideoFrame(self)
         self.choose_audio_or_video_frame.grid(row=1, column=0, padx=10, pady=10, sticky="ns")
 
-        self.download_options_frame = DownloadOptionsFrame(self, self.choose_audio_or_video_frame)
-        self.download_options_frame.grid(row=1, column=1, padx=10, pady=10, sticky="ns")
-
         self.output_options_frame = OutputOptionsFrame(self, self, self.choose_audio_or_video_frame)
-        self.output_options_frame.grid(row=1, column=2, padx=10, pady=10, sticky="nsew")
-
-    def update_download_options_frame(self):
-        # Remove old DownloadOptionsFrame
-        self.download_options_frame.grid_forget()
-        self.download_options_frame.destroy()
-
-        # Create a new one
-        self.download_options_frame = DownloadOptionsFrame(self, self.choose_audio_or_video_frame)
-        self.download_options_frame.grid(row=1, column=1, padx=10, pady=10, sticky="ns")
+        self.output_options_frame.grid(row=1, column=1, padx=10, pady=10, sticky="nsew")
