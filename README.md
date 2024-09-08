@@ -1,6 +1,6 @@
 # centauri-dl
 
-A YouTube downloader made using CustomTkinter.
+A YouTube downloader made with CustomTkinter.
 
 ## License
 
