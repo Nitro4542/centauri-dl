@@ -1,11 +1,6 @@
 # centauri-dl
 
-An example project using CustomTkInter
-
-## Can I actually use it?
-
-Yes, it should work. It isn't meant to be great, but rather just be there as an example for me
-to reference to in later projects.
+A YouTube downloader made using CustomTkinter.
 
 ## License
 
